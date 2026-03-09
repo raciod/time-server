@@ -29,4 +29,4 @@ Once built, open your browser and visit:
 ```
 http://127.0.0.1:8080
 ```
-
+**Update: this program now can be used by both ipv4 and ipv6**

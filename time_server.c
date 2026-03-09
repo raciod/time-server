@@ -16,7 +16,7 @@ int main(){
 	printf("Configuring local address...\n");
 	struct addrinfo hints;
 	memset(&hints, 0, sizeof(hints)); // We fill the memory with 0
-	hints.ai_family = AF_INET; // IPV4 address
+	hints.ai_family = AF_INET6; // IPV6 address
 	hints.ai_socktype = SOCK_STREAM; // We are using TCP
 	hints.ai_flags = AI_PASSIVE; // Indicates that the socket will be used for binding to a local address
 
@@ -29,6 +29,13 @@ int main(){
 
 	if(socket_listen < 0){
 		fprintf(stderr, "socket() failed. (%d)\n", errno);
+		return 1;
+	}
+
+	// this line is used to make the program work with ipv4 and ipv6
+	int option = 0;
+	if(setsockopt(socket_listen, IPPROTO_IPV6, IPV6_V6ONLY, (void*)&option, sizeof(option))){
+		fprintf(stderr, "setsockopt() failed.\n", errno);
 		return 1;
 	}
 
